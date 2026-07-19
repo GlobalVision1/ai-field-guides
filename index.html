@@ -1,0 +1,200 @@
+<title>AI Field Guides</title>
+<style>
+:root{
+ --bg:#F5F1E8; --surface:#FFFFFF; --surface-alt:#ECE6D6; --ink:#1E2A32; --ink-muted:#5C6B73;
+ --rule:#D8D0BC; --accent-a:#1B4B73; --accent-a-soft:#DCE7EE; --accent-b:#C1560A; --accent-b-soft:#F5E3D0;
+}
+@media (prefers-color-scheme: dark){
+ :root{
+  --bg:#0F1D26; --surface:#16262F; --surface-alt:#1C2E38; --ink:#EDE7D9; --ink-muted:#9FAEB6;
+  --rule:#2A3D47; --accent-a:#6FA8D6; --accent-a-soft:rgba(111,168,214,.16); --accent-b:#F0924A; --accent-b-soft:rgba(240,146,74,.16);
+ }
+}
+:root[data-theme="dark"]{
+ --bg:#0F1D26; --surface:#16262F; --surface-alt:#1C2E38; --ink:#EDE7D9; --ink-muted:#9FAEB6;
+ --rule:#2A3D47; --accent-a:#6FA8D6; --accent-a-soft:rgba(111,168,214,.16); --accent-b:#F0924A; --accent-b-soft:rgba(240,146,74,.16);
+}
+:root[data-theme="light"]{
+ --bg:#F5F1E8; --surface:#FFFFFF; --surface-alt:#ECE6D6; --ink:#1E2A32; --ink-muted:#5C6B73;
+ --rule:#D8D0BC; --accent-a:#1B4B73; --accent-a-soft:#DCE7EE; --accent-b:#C1560A; --accent-b-soft:#F5E3D0;
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; line-height:1.6; font-size:16px; }
+h1,h2,h3,h4{ font-family:Georgia,"Iowan Old Style",serif; text-wrap:balance; margin:0 0 .4em; }
+.mono{ font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-variant-numeric:tabular-nums; }
+a{ color:var(--accent-a); }
+button, .btn{ font-family:inherit; cursor:pointer; }
+:focus-visible{ outline:2px solid var(--accent-a); outline-offset:2px; }
+
+.masthead{ padding:4rem 1.5rem 2.5rem; max-width:960px; margin:0 auto; text-align:center; }
+.eyebrow{ font-family:ui-monospace,monospace; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:var(--ink-muted); margin-bottom:1rem; display:block; }
+.masthead h1{ font-size:clamp(2.1rem,5vw,3rem); line-height:1.1; margin-bottom:.7rem; }
+.masthead .sub{ color:var(--ink-muted); font-size:1.08rem; max-width:52ch; margin:0 auto; }
+
+.wrap{ max-width:960px; margin:0 auto; padding:0 1.5rem 5rem; }
+
+.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.1rem; margin:2.5rem 0; }
+.card{ background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:1.5rem 1.5rem 1.3rem; display:flex; flex-direction:column; }
+.card .icon{ font-size:1.8rem; margin-bottom:.7rem; line-height:1; }
+.card h3{ font-size:1.12rem; margin-bottom:.35rem; }
+.card .hook{ color:var(--ink-muted); font-size:.9rem; flex-grow:1; margin-bottom:1.1rem; }
+.card .row{ display:flex; align-items:center; justify-content:space-between; gap:.8rem; }
+.card .price{ font-family:ui-monospace,monospace; font-weight:600; font-size:1.05rem; }
+.buy{
+ background:var(--accent-a); color:var(--surface); border:none; border-radius:6px;
+ padding:.55rem 1rem; font-size:.88rem; font-weight:600; text-decoration:none; display:inline-block;
+}
+.buy:hover{ opacity:.9; }
+
+.bundle{
+ background:var(--accent-b-soft); border:1px solid var(--accent-b); border-radius:12px;
+ padding:2rem 2rem 2.2rem; margin:3rem 0; text-align:center;
+}
+.bundle .eyebrow{ color:var(--accent-b); }
+.bundle h2{ font-size:1.6rem; margin-bottom:.5rem; }
+.bundle .sub{ color:var(--ink-muted); font-size:.95rem; max-width:48ch; margin:0 auto 1.3rem; }
+.bundle .price-row{ display:flex; align-items:baseline; justify-content:center; gap:.6rem; margin-bottom:1.3rem; }
+.bundle .strike{ text-decoration:line-through; color:var(--ink-muted); font-family:ui-monospace,monospace; font-size:1rem; }
+.bundle .now{ font-family:ui-monospace,monospace; font-size:1.7rem; font-weight:700; color:var(--accent-b); }
+.buy-lg{
+ background:var(--accent-b); color:var(--surface); border:none; border-radius:6px;
+ padding:.8rem 1.8rem; font-size:1rem; font-weight:700; text-decoration:none; display:inline-block;
+}
+.buy-lg:hover{ opacity:.9; }
+
+.whatyouget{ display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; margin-top:2rem; }
+.whatyouget .item{ display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--ink-muted); }
+.whatyouget .dot{ width:.5rem; height:.5rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; }
+
+.detail-divider{ text-align:center; margin:3.5rem 0 2rem; }
+.detail-divider .eyebrow{ background:var(--bg); }
+.detail-divider hr{ border:none; border-top:1px solid var(--rule); margin-top:-.9rem; }
+
+.product-detail{
+ background:var(--surface); border:1px solid var(--rule); border-radius:12px;
+ padding:2rem 2.2rem 2.2rem; margin-bottom:1.4rem; scroll-margin-top:1.5rem;
+}
+.product-detail .pd-head{ display:flex; align-items:center; gap:.8rem; margin-bottom:.3rem; }
+.product-detail .pd-head .icon{ font-size:1.8rem; }
+.product-detail .pd-head h2{ font-size:1.5rem; margin:0; }
+.product-detail .problem{ font-size:1rem; margin:1.1rem 0; max-width:60ch; }
+.product-detail h4{ font-family:ui-monospace,monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-muted); margin:1.3rem 0 .5rem; }
+.product-detail .includes{ list-style:none; padding:0; margin:0; display:grid; gap:.5rem; }
+.product-detail .includes li{ display:flex; gap:.6rem; font-size:.94rem; align-items:baseline; }
+.product-detail .includes .dot{ width:.45rem; height:.45rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; margin-top:.4rem; }
+.product-detail .pd-footer{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid var(--rule); flex-wrap:wrap; }
+.product-detail .pd-price{ font-family:ui-monospace,monospace; font-weight:700; font-size:1.3rem; }
+.product-detail .pd-guarantee{ font-size:.82rem; color:var(--ink-muted); }
+
+footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; padding:0 1.5rem; }
+
+@media(max-width:480px){
+ .card .row{ flex-direction:column; align-items:flex-start; gap:.6rem; }
+ .buy{ width:100%; text-align:center; }
+}
+</style>
+
+<header class="masthead">
+ <span class="eyebrow">AI Field Guides</span>
+ <h1>Plain-English AI Playbooks, Not Hype</h1>
+ <p class="sub">Five short guides, each paired with a companion video, built by actually testing what works - not repackaging one creator's video. Pick the one for your problem, or get all five.</p>
+</header>
+
+<div class="wrap">
+ <div class="grid">
+  <article class="card">
+   <span class="icon">📐</span>
+   <h3>9 AI Business Paths</h3>
+   <p class="hook">Two tracks to making money with AI - build an audience over time, or start earning this week with cold outreach. Nine models mapped out plainly, with a built-in reality check on the hype.</p>
+   <div class="row">
+    <span class="price">$27</span>
+    <a class="buy" href="#buy-9paths">Get it</a>
+   </div>
+  </article>
+
+  <article class="card">
+   <span class="icon">🧰</span>
+   <h3>The Small Business AI Stack</h3>
+   <p class="hook">Which AI tool to reach for and when - organized by the job it does, not the brand name, from your first chatbot up to running parts of your business hands-off.</p>
+   <div class="row">
+    <span class="price">$12</span>
+    <a class="buy" href="#buy-stack">Get it</a>
+   </div>
+  </article>
+
+  <article class="card">
+   <span class="icon">💰</span>
+   <h3>The AI-Assisted Money Audit</h3>
+   <p class="hook">A proven once-a-year money system - see every dollar you spent, set target ratios, track net worth - with the tedious spreadsheet grind handed off to AI.</p>
+   <div class="row">
+    <span class="price">$12</span>
+    <a class="buy" href="#buy-money">Get it</a>
+   </div>
+  </article>
+
+  <article class="card">
+   <span class="icon">🗂️</span>
+   <h3>The 5-Layer AI Productivity System</h3>
+   <p class="hook">Capture, see the whole picture, decide with help, automate the repeats, test and improve - a real system for admin overload, not another list of tricks.</p>
+   <div class="row">
+    <span class="price">$12</span>
+    <a class="buy" href="#buy-productivity">Get it</a>
+   </div>
+  </article>
+
+  <article class="card">
+   <span class="icon">🛍️</span>
+   <h3>The AI E-Commerce Build Order</h3>
+   <p class="hook">Six phases to launch an AI-assisted online store - product, brand, build, creative, ads, and protecting the business - including the real failures, not just the wins.</p>
+   <div class="row">
+    <span class="price">$12</span>
+    <a class="buy" href="#buy-ecom">Get it</a>
+   </div>
+  </article>
+ </div>
+
+ <div class="bundle">
+  <span class="eyebrow">Best value</span>
+  <h2>Get All 5 Field Guides</h2>
+  <p class="sub">Every guide above, bundled - five PDFs, five companion videos, one price.</p>
+  <div class="price-row">
+   <span class="strike">$60</span>
+   <span class="now">$39</span>
+  </div>
+  <a class="buy-lg" href="#buy-bundle">Get the Bundle</a>
+  <div class="whatyouget">
+   <span class="item"><span class="dot"></span>5 PDF guides</span>
+   <span class="item"><span class="dot"></span>5 companion videos</span>
+   <span class="item"><span class="dot"></span>instant download</span>
+  </div>
+ </div>
+
+ <div class="detail-divider">
+  <span class="eyebrow">The Full Details</span>
+  <hr>
+ </div>
+
+ <article class="product-detail" id="buy-9paths">
+  <div class="pd-head"><span class="icon">📐</span><h2>9 AI Business Paths</h2></div>
+  <p class="problem">Every "make money with AI" video online blurs together after a while - and most of them skip the part that actually matters: whether the method fits <em>your</em> situation. Do you have a year to build an audience, or do you need cash in your pocket this week? This guide sorts nine real AI business models into two tracks based on exactly that question, so you're not guessing which advice applies to you.</p>
+
+  <h4>What's Included</h4>
+  <ul class="includes">
+   <li><span class="dot"></span> The full PDF guide - Path A (build an audience) vs. Path B (cash this week), all nine models broken down step by step</li>
+   <li><span class="dot"></span> A companion video walking through the same material</li>
+   <li><span class="dot"></span> A one-page cheat sheet summarizing the decision points and glossary</li>
+  </ul>
+
+  <div class="pd-footer">
+   <div>
+    <span class="pd-price">$27</span>
+    <div class="pd-guarantee">7-day money-back guarantee</div>
+   </div>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/9aibusinesspaths" target="_blank" rel="noopener">Buy Now</a>
+  </div>
+ </article>
+</div>
+
+<footer class="pagefoot">
+ <p>Each guide is written from scratch by synthesizing multiple sources and testing what's actually useful - not a repackaged copy of any single video.</p>
+</footer>
