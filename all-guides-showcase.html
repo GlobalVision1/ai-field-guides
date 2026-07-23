@@ -1,0 +1,218 @@
+<meta charset="UTF-8">
+<title>Everything Included - AI Field Guides Bundle</title>
+<style>
+:root{
+ --bg:#F5F1E8; --surface:#FFFFFF; --surface-alt:#ECE6D6; --ink:#1E2A32; --ink-muted:#5C6B73;
+ --rule:#D8D0BC; --accent-a:#1B4B73; --accent-a-soft:#DCE7EE; --accent-b:#C1560A; --accent-b-soft:#F5E3D0;
+}
+@media (prefers-color-scheme: dark){
+ :root{
+  --bg:#0F1D26; --surface:#16262F; --surface-alt:#1C2E38; --ink:#EDE7D9; --ink-muted:#9FAEB6;
+  --rule:#2A3D47; --accent-a:#6FA8D6; --accent-a-soft:rgba(111,168,214,.16); --accent-b:#F0924A; --accent-b-soft:rgba(240,146,74,.16);
+ }
+}
+:root[data-theme="dark"]{
+ --bg:#0F1D26; --surface:#16262F; --surface-alt:#1C2E38; --ink:#EDE7D9; --ink-muted:#9FAEB6;
+ --rule:#2A3D47; --accent-a:#6FA8D6; --accent-a-soft:rgba(111,168,214,.16); --accent-b:#F0924A; --accent-b-soft:rgba(240,146,74,.16);
+}
+:root[data-theme="light"]{
+ --bg:#F5F1E8; --surface:#FFFFFF; --surface-alt:#ECE6D6; --ink:#1E2A32; --ink-muted:#5C6B73;
+ --rule:#D8D0BC; --accent-a:#1B4B73; --accent-a-soft:#DCE7EE; --accent-b:#C1560A; --accent-b-soft:#F5E3D0;
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; line-height:1.6; font-size:16px; }
+h1,h2,h3{ font-family:Georgia,"Iowan Old Style",serif; text-wrap:balance; margin:0 0 .4em; }
+a{ color:var(--accent-a); }
+.mono{ font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; }
+
+.back{ max-width:1000px; margin:0 auto; padding:1.5rem 1.5rem 0; }
+.back a{ font-size:.85rem; color:var(--ink-muted); text-decoration:none; }
+.back a:hover{ color:var(--accent-a); }
+
+.hero{ max-width:800px; margin:0 auto; padding:2.5rem 1.5rem 3rem; text-align:center; }
+.eyebrow{ font-family:ui-monospace,monospace; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:var(--accent-b); margin-bottom:1rem; display:block; }
+.hero h1{ font-size:clamp(2rem,5vw,2.9rem); line-height:1.1; margin-bottom:.8rem; }
+.hero .sub{ color:var(--ink-muted); font-size:1.1rem; max-width:56ch; margin:0 auto; }
+
+.wrap{ max-width:1000px; margin:0 auto; padding:0 1.5rem 4rem; }
+
+.stat-row{ display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; margin:2.5rem 0 3.5rem; text-align:center; }
+.stat-row .num{ font-family:ui-monospace,monospace; font-size:2rem; font-weight:700; color:var(--accent-a); }
+.stat-row .lbl{ font-size:.82rem; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.06em; }
+
+.book-block{
+ display:grid; grid-template-columns:1fr 1fr; gap:2.2rem; align-items:center;
+ background:var(--surface); border:1px solid var(--rule); border-radius:14px; padding:2rem;
+ margin-bottom:1.6rem;
+}
+.book-block.reverse .gallery{ order:2; }
+.book-block.reverse .info{ order:1; }
+.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.gallery img{ width:100%; border-radius:8px; border:1px solid var(--rule); display:block; aspect-ratio:4/3; object-fit:cover; }
+.gallery .wide{ grid-column:1 / -1; aspect-ratio:16/9; }
+.info .icon{ font-size:1.6rem; margin-bottom:.5rem; }
+.info h2{ font-size:1.35rem; margin-bottom:.5rem; }
+.info p{ color:var(--ink-muted); font-size:.94rem; margin:0 0 1rem; }
+.info .includes{ list-style:none; padding:0; margin:0; display:grid; gap:.4rem; }
+.info .includes li{ font-size:.85rem; display:flex; gap:.5rem; align-items:baseline; }
+.info .includes .dot{ width:.4rem; height:.4rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; margin-top:.4rem; }
+
+.wow{
+ text-align:center; margin:3.5rem 0 2rem; padding:2.5rem 1.5rem;
+ background:linear-gradient(135deg, var(--accent-a-soft), var(--accent-b-soft));
+ border-radius:16px; border:1px solid var(--rule);
+}
+.wow h2{ font-size:1.8rem; margin-bottom:.6rem; }
+.wow p{ color:var(--ink-muted); max-width:50ch; margin:0 auto 1.5rem; }
+.price-block{ display:flex; align-items:baseline; justify-content:center; gap:.8rem; margin-bottom:.4rem; }
+.price-block .strike{ text-decoration:line-through; color:var(--ink-muted); font-family:ui-monospace,monospace; font-size:1.3rem; }
+.price-block .now{ font-family:ui-monospace,monospace; font-size:2.6rem; font-weight:700; color:var(--accent-b); }
+.save-badge{ display:inline-block; background:var(--accent-b); color:#fff; font-size:.78rem; font-weight:700; padding:.25rem .7rem; border-radius:20px; margin-bottom:1.3rem; }
+.buy-lg{
+ background:var(--accent-b); color:var(--surface); border:none; border-radius:6px;
+ padding:.9rem 2.2rem; font-size:1.05rem; font-weight:700; text-decoration:none; display:inline-block;
+}
+.buy-lg:hover{ opacity:.9; }
+.wow .fine{ font-size:.8rem; color:var(--ink-muted); margin-top:1rem; }
+
+footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; padding:0 1.5rem 3rem; }
+
+@media(max-width:720px){
+ .book-block{ grid-template-columns:1fr; }
+ .book-block.reverse .gallery{ order:1; }
+ .book-block.reverse .info{ order:2; }
+}
+</style>
+
+<div class="back"><a href="storefront.html">&larr; Back to AI Field Guides</a></div>
+
+<header class="hero">
+ <span class="eyebrow">Everything Included</span>
+ <h1>Five Guides. Five Videos. One Ridiculous Price.</h1>
+ <p class="sub">Here's exactly what lands in your inbox the moment you get the bundle - real pages, real slides, real videos, not stock photos.</p>
+</header>
+
+<div class="wrap">
+
+ <div class="stat-row">
+  <div><div class="num">5</div><div class="lbl">Full Guides</div></div>
+  <div><div class="num">5</div><div class="lbl">Videos</div></div>
+  <div><div class="num">5</div><div class="lbl">Audio Overviews</div></div>
+  <div><div class="num">5</div><div class="lbl">Cheat Sheets</div></div>
+  <div><div class="num">5</div><div class="lbl">Infographics</div></div>
+ </div>
+
+ <div class="book-block">
+  <div class="gallery">
+   <img class="wide" src="images/card-previews/card1-cover-01.jpg" alt="9 AI Business Paths guide page">
+   <img src="images/slides-01-9-ai-business-paths/slide-01.jpg" alt="Cheat sheet slide">
+   <img src="images/9aipaths-infographic-preview.jpg" alt="Infographic">
+  </div>
+  <div class="info">
+   <div class="icon">📐</div>
+   <h2>9 AI Business Paths</h2>
+   <p>Two tracks to making money with AI - build an audience over time, or start earning this week with cold outreach.</p>
+   <ul class="includes">
+    <li><span class="dot"></span>Full PDF guide, all 9 models</li>
+    <li><span class="dot"></span>Companion video</li>
+    <li><span class="dot"></span>Audio Overview</li>
+    <li><span class="dot"></span>12-slide cheat sheet</li>
+    <li><span class="dot"></span>Infographic</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="book-block reverse">
+  <div class="gallery">
+   <img class="wide" src="images/card-previews/card2-cover-1.jpg" alt="Small Business AI Stack guide page">
+   <img src="images/booklet2-infographic.jpg" alt="Infographic">
+  </div>
+  <div class="info">
+   <div class="icon">🧰</div>
+   <h2>The Small Business AI Stack</h2>
+   <p>Which AI tool to reach for and when - organized by the job it does, across all 7 tiers.</p>
+   <ul class="includes">
+    <li><span class="dot"></span>Full PDF guide, all 7 tiers</li>
+    <li><span class="dot"></span>Companion video</li>
+    <li><span class="dot"></span>Audio Overview</li>
+    <li><span class="dot"></span>Cheat sheet</li>
+    <li><span class="dot"></span>Infographic</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="book-block">
+  <div class="gallery">
+   <img class="wide" src="images/card-previews/card3-cover-1.jpg" alt="AI Money Audit guide page">
+   <img src="images/booklet3-infographic.jpg" alt="Infographic">
+  </div>
+  <div class="info">
+   <div class="icon">💰</div>
+   <h2>The AI-Assisted Money Audit</h2>
+   <p>See every dollar you spent, set target ratios, track net worth - done in an afternoon.</p>
+   <ul class="includes">
+    <li><span class="dot"></span>Full PDF guide, all 4 steps</li>
+    <li><span class="dot"></span>Companion video</li>
+    <li><span class="dot"></span>Audio Overview</li>
+    <li><span class="dot"></span>Cheat sheet</li>
+    <li><span class="dot"></span>Infographic</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="book-block reverse">
+  <div class="gallery">
+   <img class="wide" src="images/card-previews/card4-cover-1.jpg" alt="AI Productivity System guide page">
+   <img src="images/booklet4-infographic.jpg" alt="Infographic">
+  </div>
+  <div class="info">
+   <div class="icon">🗂️</div>
+   <h2>The 5-Layer AI Productivity System</h2>
+   <p>Capture, see the whole picture, decide with help, automate the repeats, test and improve.</p>
+   <ul class="includes">
+    <li><span class="dot"></span>Full PDF guide, all 5 layers</li>
+    <li><span class="dot"></span>Companion video</li>
+    <li><span class="dot"></span>Audio Overview</li>
+    <li><span class="dot"></span>Cheat sheet</li>
+    <li><span class="dot"></span>Infographic</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="book-block">
+  <div class="gallery">
+   <img class="wide" src="images/card-previews/card5-cover-1.jpg" alt="AI E-Commerce Build Order guide page">
+   <img src="images/booklet5-infographic.jpg" alt="Infographic">
+  </div>
+  <div class="info">
+   <div class="icon">🛍️</div>
+   <h2>The AI E-Commerce Build Order</h2>
+   <p>Six phases to launch an AI-assisted store - including the real failures, not just the wins.</p>
+   <ul class="includes">
+    <li><span class="dot"></span>Full PDF guide, all 6 phases</li>
+    <li><span class="dot"></span>Companion video</li>
+    <li><span class="dot"></span>Audio Overview</li>
+    <li><span class="dot"></span>Cheat sheet</li>
+    <li><span class="dot"></span>Infographic</li>
+   </ul>
+  </div>
+ </div>
+
+ <div class="wow">
+  <h2>25 Real Assets. One Price.</h2>
+  <p>Five complete guides, five videos, five audio overviews, five cheat sheets, five infographics - bought separately, that's $245. Together, it's less than the cost of one long dinner out.</p>
+  <div class="price-block">
+   <span class="strike">$245</span>
+   <span class="now">$199</span>
+  </div>
+  <div class="save-badge">Save $46</div>
+  <br>
+  <a class="buy-lg" href="storefront.html#top-grid">Grab All 5 Guides</a>
+  <p class="fine">One-click bundle checkout is coming soon - for now, add each guide above to your cart from the main page.</p>
+ </div>
+
+</div>
+
+<footer class="pagefoot">
+ <p>Each guide is written from scratch by synthesizing multiple sources and testing what's actually useful - not a repackaged copy of any single video.</p>
+</footer>

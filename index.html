@@ -34,20 +34,6 @@ button, .btn{ font-family:inherit; cursor:pointer; }
 
 .wrap{ max-width:960px; margin:0 auto; padding:0 1.5rem 5rem; }
 
-/* Email capture */
-.capture{
- background:var(--surface); border:1px solid var(--rule); border-radius:12px;
- padding:1.6rem 1.8rem; margin:0 0 2.5rem; display:flex; align-items:center; justify-content:space-between;
- gap:1.2rem; flex-wrap:wrap;
-}
-.capture .txt h3{ font-size:1.05rem; margin-bottom:.2rem; }
-.capture .txt p{ margin:0; color:var(--ink-muted); font-size:.88rem; }
-.capture-btn{
- background:var(--accent-a); color:var(--surface); border:none; border-radius:6px;
- padding:.7rem 1.3rem; font-size:.9rem; font-weight:600; text-decoration:none; display:inline-block; white-space:nowrap;
-}
-.capture-btn:hover{ opacity:.9; }
-
 .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.1rem; margin:2.5rem 0; }
 .card{
  background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:1.5rem 1.5rem 1.3rem;
@@ -55,8 +41,13 @@ button, .btn{ font-family:inherit; cursor:pointer; }
  transition:transform .15s ease, box-shadow .15s ease; position:relative;
 }
 .card:hover, .card:focus-visible{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.08); }
-.card .icon{ font-size:1.8rem; margin-bottom:.7rem; line-height:1; }
-.card .teaser-vid{ width:100%; border-radius:8px; margin-bottom:.8rem; display:block; background:#000; }
+.card .teaser-vid{ width:100%; border-radius:8px; margin-bottom:.8rem; display:block; background:#000; aspect-ratio:16/10; object-fit:cover; }
+.card .card-preview{ position:relative; width:100%; aspect-ratio:16/10; border-radius:8px; overflow:hidden; margin-bottom:.8rem; background:var(--surface-alt); }
+.card .card-preview img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s ease; }
+.card .card-preview img.active{ opacity:1; }
+.card .card-preview .dots{ position:absolute; bottom:.5rem; left:50%; transform:translateX(-50%); display:flex; gap:.3rem; }
+.card .card-preview .dots span{ width:.35rem; height:.35rem; border-radius:50%; background:rgba(255,255,255,.55); }
+.card .card-preview .dots span.active{ background:#fff; }
 .card h3{ font-size:1.12rem; margin-bottom:.35rem; }
 .card .hook{ color:var(--ink-muted); font-size:.9rem; margin-bottom:.8rem; }
 .card .pullquote{ font-family:Georgia,serif; font-style:italic; font-size:.92rem; color:var(--accent-a); border-left:2px solid var(--accent-a); padding-left:.7rem; margin:0 0 1.1rem; flex-grow:1; }
@@ -83,6 +74,25 @@ button, .btn{ font-family:inherit; cursor:pointer; }
 .whatyouget{ display:flex; gap:1.5rem; flex-wrap:wrap; justify-content:center; margin-top:2rem; }
 .whatyouget .item{ display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--ink-muted); }
 .whatyouget .dot{ width:.5rem; height:.5rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; }
+
+/* Bottom capture - last chance CTA */
+.capture{
+ background:var(--surface); border:1px solid var(--rule); border-radius:12px;
+ padding:2rem 2rem 2.2rem; margin:3rem 0 1rem; text-align:center;
+}
+.capture h2{ font-size:1.4rem; margin-bottom:.4rem; }
+.capture .sub{ color:var(--ink-muted); font-size:.95rem; max-width:44ch; margin:0 auto 1.3rem; }
+.capture-form{ display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; max-width:520px; margin:0 auto; }
+.capture-form input{
+ flex:1; min-width:160px; padding:.7rem .9rem; border:1px solid var(--rule); border-radius:6px;
+ background:var(--bg); color:var(--ink); font-family:inherit; font-size:.92rem;
+}
+.capture-btn{
+ background:var(--accent-a); color:var(--surface); border:none; border-radius:6px;
+ padding:.7rem 1.3rem; font-size:.9rem; font-weight:600; white-space:nowrap;
+}
+.capture-btn:hover{ opacity:.9; }
+.capture-status{ margin-top:.8rem; font-size:.85rem; color:var(--ink-muted); min-height:1.2em; }
 
 footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; padding:0 1.5rem; }
 
@@ -111,7 +121,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
 .pd-price{ font-family:ui-monospace,monospace; font-weight:700; font-size:1.3rem; }
 .pd-guarantee{ font-size:.82rem; color:var(--ink-muted); }
 
-/* Slide-bar carousel */
+/* Slide-bar carousel (modals) */
 .slidebar{ margin:1.2rem 0; }
 .slidebar .frame{
  position:relative; border-radius:10px; overflow:hidden; background:var(--surface-alt); border:1px solid var(--rule);
@@ -137,8 +147,8 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
 
 @media(max-width:480px){
  .card .row{ flex-direction:column; align-items:flex-start; gap:.6rem; }
- .capture{ flex-direction:column; align-items:flex-start; }
- .capture-btn{ width:100%; text-align:center; }
+ .capture-form{ flex-direction:column; }
+ .capture-btn{ width:100%; }
 }
 </style>
 
@@ -150,14 +160,6 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
 
 <div class="wrap">
 
- <div class="capture">
-  <div class="txt">
-   <h3>Not ready to buy yet?</h3>
-   <p>Get free AI tips and first access when a new guide drops - just your email, no spam.</p>
-  </div>
-  <a class="capture-btn" href="https://housinghub.gumroad.com/subscribe" target="_blank" rel="noopener">Get free updates</a>
- </div>
-
  <div class="grid" id="top-grid">
 
   <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-9paths').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-9paths').showModal();}">
@@ -166,51 +168,51 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
    <p class="hook">Two tracks to making money with AI - build an audience over time, or start earning this week with cold outreach.</p>
    <p class="pullquote">"Do you need $1,000 this week, or can you wait three years?"</p>
    <div class="row">
-    <span class="price">$27</span>
+    <span class="price">$49</span>
     <span class="preview-cta">Preview inside &rarr;</span>
    </div>
   </div>
 
   <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-stack').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-stack').showModal();}">
-   <span class="icon">🧰</span>
+   <div class="card-preview" data-images="images/card-previews/card2-cover-1.jpg,images/booklet2-infographic.jpg"></div>
    <h3>The Small Business AI Stack</h3>
    <p class="hook">Which AI tool to reach for and when - organized by the job it does, not the brand name.</p>
    <p class="pullquote">"Most 'AI tools' lists are just a countdown of someone's favorites."</p>
    <div class="row">
-    <span class="price">$12</span>
+    <span class="price">$49</span>
     <span class="preview-cta">Preview inside &rarr;</span>
    </div>
   </div>
 
   <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-money').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-money').showModal();}">
-   <span class="icon">💰</span>
+   <div class="card-preview" data-images="images/card-previews/card3-cover-1.jpg,images/booklet3-infographic.jpg"></div>
    <h3>The AI-Assisted Money Audit</h3>
    <p class="hook">A proven once-a-year money system - see every dollar you spent, set target ratios, track net worth.</p>
    <p class="pullquote">"Almost nobody can tell you, to the dollar, what they actually spent last year."</p>
    <div class="row">
-    <span class="price">$12</span>
+    <span class="price">$49</span>
     <span class="preview-cta">Preview inside &rarr;</span>
    </div>
   </div>
 
   <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-productivity').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-productivity').showModal();}">
-   <span class="icon">🗂️</span>
+   <div class="card-preview" data-images="images/card-previews/card4-cover-1.jpg,images/booklet4-infographic.jpg"></div>
    <h3>The 5-Layer AI Productivity System</h3>
    <p class="hook">Capture, see the whole picture, decide with help, automate the repeats, test and improve.</p>
    <p class="pullquote">"Most 'AI productivity' content is a grab-bag of tricks - hard to actually stick with."</p>
    <div class="row">
-    <span class="price">$12</span>
+    <span class="price">$49</span>
     <span class="preview-cta">Preview inside &rarr;</span>
    </div>
   </div>
 
   <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-ecom').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-ecom').showModal();}">
-   <span class="icon">🛍️</span>
+   <div class="card-preview" data-images="images/card-previews/card5-cover-1.jpg,images/booklet5-infographic.jpg"></div>
    <h3>The AI E-Commerce Build Order</h3>
    <p class="hook">Six phases to launch an AI-assisted online store - including the real failures, not just the wins.</p>
    <p class="pullquote">"One creator's first two product tests made $66 and $0 before the third one worked."</p>
    <div class="row">
-    <span class="price">$12</span>
+    <span class="price">$49</span>
     <span class="preview-cta">Preview inside &rarr;</span>
    </div>
   </div>
@@ -220,17 +222,28 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
  <div class="bundle">
   <span class="eyebrow">Best value</span>
   <h2>Get All 5 Field Guides</h2>
-  <p class="sub">Every guide above - five PDFs, five companion videos, one price. Click any guide above to preview it, or grab the bundle.</p>
+  <p class="sub">Every guide above - five PDFs, five companion videos, and every bonus - one price.</p>
   <div class="price-row">
-   <span class="strike">$60</span>
-   <span class="now">$39</span>
+   <span class="strike">$245</span>
+   <span class="now">$199</span>
   </div>
-  <a class="buy-lg" href="#top-grid">See What's Included</a>
+  <a class="buy-lg" href="all-guides-showcase.html">See What's Included</a>
   <div class="whatyouget">
    <span class="item"><span class="dot"></span>5 PDF guides</span>
    <span class="item"><span class="dot"></span>5 companion videos</span>
    <span class="item"><span class="dot"></span>instant download</span>
   </div>
+ </div>
+
+ <div class="capture">
+  <h2>Want more?</h2>
+  <p class="sub">To get more information, updates, and tips - join us! Just your name and email, no spam.</p>
+  <form class="capture-form" id="lead-form">
+   <input type="text" id="lead-name" placeholder="Your name" autocomplete="name">
+   <input type="email" id="lead-email" placeholder="you@email.com" autocomplete="email" required>
+   <button type="submit" class="capture-btn">Join Us</button>
+  </form>
+  <div class="capture-status" id="lead-status"></div>
  </div>
 
 </div>
@@ -263,7 +276,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
 
   <div class="pd-footer">
    <div>
-    <span class="pd-price">$27</span>
+    <span class="pd-price">$49</span>
     <div class="pd-guarantee">7-day money-back guarantee</div>
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/9aibusinesspaths" target="_blank" rel="noopener">Buy Now</a>
@@ -288,12 +301,12 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
    <li><span class="dot"></span> A visual infographic mapping the full stack at a glance</li>
   </ul>
 
-  <h4>Preview the Infographic</h4>
-  <div class="slidebar" data-images="images/booklet2-infographic.jpg" data-soon="true"></div>
+  <h4>Preview</h4>
+  <div class="slidebar" data-images="images/card-previews/card2-cover-1.jpg,images/booklet2-infographic.jpg" data-soon="true"></div>
 
   <div class="pd-footer">
    <div>
-    <span class="pd-price">$12</span>
+    <span class="pd-price">$49</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/mlbwtk" target="_blank" rel="noopener">Buy Now</a>
@@ -318,12 +331,12 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
    <li><span class="dot"></span> A visual infographic mapping the full system at a glance</li>
   </ul>
 
-  <h4>Preview the Infographic</h4>
-  <div class="slidebar" data-images="images/booklet3-infographic.jpg" data-soon="true"></div>
+  <h4>Preview</h4>
+  <div class="slidebar" data-images="images/card-previews/card3-cover-1.jpg,images/booklet3-infographic.jpg" data-soon="true"></div>
 
   <div class="pd-footer">
    <div>
-    <span class="pd-price">$12</span>
+    <span class="pd-price">$49</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/lmiovc" target="_blank" rel="noopener">Buy Now</a>
@@ -348,12 +361,12 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
    <li><span class="dot"></span> A visual infographic mapping the full system at a glance</li>
   </ul>
 
-  <h4>Preview the Infographic</h4>
-  <div class="slidebar" data-images="images/booklet4-infographic.jpg" data-soon="true"></div>
+  <h4>Preview</h4>
+  <div class="slidebar" data-images="images/card-previews/card4-cover-1.jpg,images/booklet4-infographic.jpg" data-soon="true"></div>
 
   <div class="pd-footer">
    <div>
-    <span class="pd-price">$12</span>
+    <span class="pd-price">$49</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/glunk" target="_blank" rel="noopener">Buy Now</a>
@@ -378,12 +391,12 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
    <li><span class="dot"></span> A visual infographic mapping the full build order at a glance</li>
   </ul>
 
-  <h4>Preview the Infographic</h4>
-  <div class="slidebar" data-images="images/booklet5-infographic.jpg" data-soon="true"></div>
+  <h4>Preview</h4>
+  <div class="slidebar" data-images="images/card-previews/card5-cover-1.jpg,images/booklet5-infographic.jpg" data-soon="true"></div>
 
   <div class="pd-footer">
    <div>
-    <span class="pd-price">$12</span>
+    <span class="pd-price">$49</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/lqvwq" target="_blank" rel="noopener">Buy Now</a>
@@ -392,6 +405,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
 </dialog>
 
 <script>
+// ---- Modal outside-click-to-close ----
 document.querySelectorAll('dialog.pd').forEach(function(dlg){
  dlg.addEventListener('click', function(e){
   var r = dlg.getBoundingClientRect();
@@ -400,6 +414,7 @@ document.querySelectorAll('dialog.pd').forEach(function(dlg){
  });
 });
 
+// ---- Modal slide-bar carousels (manual nav) ----
 document.querySelectorAll('.slidebar').forEach(function(sb){
  var images = [];
  if(sb.dataset.prefix){
@@ -409,6 +424,7 @@ document.querySelectorAll('.slidebar').forEach(function(sb){
    var n = pad ? String(i).padStart(pad,'0') : String(i);
    images.push(sb.dataset.prefix + n + '.' + sb.dataset.ext);
   }
+  sb.removeAttribute('data-soon');
  } else if(sb.dataset.images){
   images = sb.dataset.images.split(',');
  }
@@ -448,5 +464,65 @@ document.querySelectorAll('.slidebar').forEach(function(sb){
   frame.querySelector('.next').addEventListener('click', function(){ idx = (idx+1)%images.length; render(); });
  }
  render();
+});
+
+// ---- Card-face auto-rotating previews (booklets 2-5) ----
+document.querySelectorAll('.card-preview').forEach(function(cp){
+ var images = cp.dataset.images.split(',');
+ var idx = 0;
+ images.forEach(function(src, i){
+  var im = document.createElement('img');
+  im.src = src; im.alt = 'Preview';
+  if(i === 0) im.classList.add('active');
+  cp.appendChild(im);
+ });
+ var dotsWrap = document.createElement('div'); dotsWrap.className = 'dots';
+ images.forEach(function(_, i){
+  var d = document.createElement('span');
+  if(i === 0) d.classList.add('active');
+  dotsWrap.appendChild(d);
+ });
+ cp.appendChild(dotsWrap);
+ var imgs = cp.querySelectorAll('img');
+ var dots = dotsWrap.querySelectorAll('span');
+ setInterval(function(){
+  imgs[idx].classList.remove('active');
+  dots[idx].classList.remove('active');
+  idx = (idx + 1) % imgs.length;
+  imgs[idx].classList.add('active');
+  dots[idx].classList.add('active');
+ }, 2800);
+});
+
+// ---- Bottom email/name capture ----
+// After deploying lead-capture-worker (see DEPLOY-STEPS.md), replace this
+// with the real Worker URL it prints out, e.g.
+// "https://gve-leads.yoursubdomain.workers.dev"
+const LEADS_ENDPOINT = "REPLACE_WITH_WORKER_URL";
+
+document.getElementById('lead-form').addEventListener('submit', async function(e){
+ e.preventDefault();
+ var name = document.getElementById('lead-name').value.trim();
+ var email = document.getElementById('lead-email').value.trim();
+ var status = document.getElementById('lead-status');
+ if(!email){ status.textContent = 'Please enter your email.'; return; }
+
+ var configured = LEADS_ENDPOINT.indexOf('REPLACE_WITH') !== 0;
+ if(configured){
+  try{
+   var res = await fetch(LEADS_ENDPOINT, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name: name, email: email, source: 'storefront-bottom-cta'})
+   });
+   if(res.ok){
+    status.textContent = "You're in! Check your inbox for updates.";
+    document.getElementById('lead-form').reset();
+    return;
+   }
+  }catch(err){ /* fall through to fallback below */ }
+ }
+ window.open('https://housinghub.gumroad.com/subscribe', '_blank');
+ status.textContent = 'Thanks! Redirecting you to join our list.';
 });
 </script>
