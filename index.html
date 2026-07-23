@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <title>AI Field Guides</title>
 <style>
 :root{
@@ -26,25 +27,42 @@ a{ color:var(--accent-a); }
 button, .btn{ font-family:inherit; cursor:pointer; }
 :focus-visible{ outline:2px solid var(--accent-a); outline-offset:2px; }
 
-.masthead{ padding:4rem 1.5rem 2.5rem; max-width:960px; margin:0 auto; text-align:center; }
+.masthead{ padding:4rem 1.5rem 2rem; max-width:960px; margin:0 auto; text-align:center; }
 .eyebrow{ font-family:ui-monospace,monospace; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:var(--ink-muted); margin-bottom:1rem; display:block; }
 .masthead h1{ font-size:clamp(2.1rem,5vw,3rem); line-height:1.1; margin-bottom:.7rem; }
 .masthead .sub{ color:var(--ink-muted); font-size:1.08rem; max-width:52ch; margin:0 auto; }
 
 .wrap{ max-width:960px; margin:0 auto; padding:0 1.5rem 5rem; }
 
+/* Email capture */
+.capture{
+ background:var(--surface); border:1px solid var(--rule); border-radius:12px;
+ padding:1.6rem 1.8rem; margin:0 0 2.5rem; display:flex; align-items:center; justify-content:space-between;
+ gap:1.2rem; flex-wrap:wrap;
+}
+.capture .txt h3{ font-size:1.05rem; margin-bottom:.2rem; }
+.capture .txt p{ margin:0; color:var(--ink-muted); font-size:.88rem; }
+.capture-btn{
+ background:var(--accent-a); color:var(--surface); border:none; border-radius:6px;
+ padding:.7rem 1.3rem; font-size:.9rem; font-weight:600; text-decoration:none; display:inline-block; white-space:nowrap;
+}
+.capture-btn:hover{ opacity:.9; }
+
 .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.1rem; margin:2.5rem 0; }
-.card{ background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:1.5rem 1.5rem 1.3rem; display:flex; flex-direction:column; }
+.card{
+ background:var(--surface); border:1px solid var(--rule); border-radius:10px; padding:1.5rem 1.5rem 1.3rem;
+ display:flex; flex-direction:column; cursor:pointer; text-align:left; width:100%; color:inherit;
+ transition:transform .15s ease, box-shadow .15s ease; position:relative;
+}
+.card:hover, .card:focus-visible{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.08); }
 .card .icon{ font-size:1.8rem; margin-bottom:.7rem; line-height:1; }
+.card .teaser-vid{ width:100%; border-radius:8px; margin-bottom:.8rem; display:block; background:#000; }
 .card h3{ font-size:1.12rem; margin-bottom:.35rem; }
-.card .hook{ color:var(--ink-muted); font-size:.9rem; flex-grow:1; margin-bottom:1.1rem; }
+.card .hook{ color:var(--ink-muted); font-size:.9rem; margin-bottom:.8rem; }
+.card .pullquote{ font-family:Georgia,serif; font-style:italic; font-size:.92rem; color:var(--accent-a); border-left:2px solid var(--accent-a); padding-left:.7rem; margin:0 0 1.1rem; flex-grow:1; }
 .card .row{ display:flex; align-items:center; justify-content:space-between; gap:.8rem; }
 .card .price{ font-family:ui-monospace,monospace; font-weight:600; font-size:1.05rem; }
-.buy{
- background:var(--accent-a); color:var(--surface); border:none; border-radius:6px;
- padding:.55rem 1rem; font-size:.88rem; font-weight:600; text-decoration:none; display:inline-block;
-}
-.buy:hover{ opacity:.9; }
+.card .preview-cta{ font-size:.85rem; font-weight:600; color:var(--accent-a); }
 
 .bundle{
  background:var(--accent-b-soft); border:1px solid var(--accent-b); border-radius:12px;
@@ -66,102 +84,148 @@ button, .btn{ font-family:inherit; cursor:pointer; }
 .whatyouget .item{ display:flex; align-items:center; gap:.5rem; font-size:.9rem; color:var(--ink-muted); }
 .whatyouget .dot{ width:.5rem; height:.5rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; }
 
-.detail-divider{ text-align:center; margin:3.5rem 0 2rem; }
-.detail-divider .eyebrow{ background:var(--bg); }
-.detail-divider hr{ border:none; border-top:1px solid var(--rule); margin-top:-.9rem; }
-
-.product-detail{
- background:var(--surface); border:1px solid var(--rule); border-radius:12px;
- padding:2rem 2.2rem 2.2rem; margin-bottom:1.4rem; scroll-margin-top:1.5rem;
-}
-.product-detail .pd-head{ display:flex; align-items:center; gap:.8rem; margin-bottom:.3rem; }
-.product-detail .pd-head .icon{ font-size:1.8rem; }
-.product-detail .pd-head h2{ font-size:1.5rem; margin:0; }
-.product-detail .problem{ font-size:1rem; margin:1.1rem 0; max-width:60ch; }
-.product-detail h4{ font-family:ui-monospace,monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-muted); margin:1.3rem 0 .5rem; }
-.product-detail .includes{ list-style:none; padding:0; margin:0; display:grid; gap:.5rem; }
-.product-detail .includes li{ display:flex; gap:.6rem; font-size:.94rem; align-items:baseline; }
-.product-detail .includes .dot{ width:.45rem; height:.45rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; margin-top:.4rem; }
-.product-detail .pd-footer{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid var(--rule); flex-wrap:wrap; }
-.product-detail .pd-price{ font-family:ui-monospace,monospace; font-weight:700; font-size:1.3rem; }
-.product-detail .pd-guarantee{ font-size:.82rem; color:var(--ink-muted); }
-
 footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; padding:0 1.5rem; }
+
+/* Modal / product detail dialog */
+dialog.pd{
+ border:none; border-radius:14px; padding:0; max-width:640px; width:92vw; max-height:88vh;
+ background:var(--surface); color:var(--ink); overflow:hidden;
+}
+dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
+.pd-scroll{ max-height:88vh; overflow-y:auto; padding:1.8rem 2rem 2.2rem; }
+.pd-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; margin-bottom:.3rem; }
+.pd-head .titlewrap{ display:flex; align-items:center; gap:.7rem; }
+.pd-head .icon{ font-size:1.7rem; }
+.pd-head h2{ font-size:1.4rem; margin:0; }
+.pd-close{
+ background:var(--surface-alt); border:none; border-radius:50%; width:2rem; height:2rem;
+ font-size:1.1rem; line-height:1; color:var(--ink-muted); flex-shrink:0;
+}
+.pd-close:hover{ color:var(--ink); }
+.pd .problem{ font-size:.98rem; margin:1rem 0; }
+.pd h4{ font-family:ui-monospace,monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-muted); margin:1.3rem 0 .5rem; }
+.pd .includes{ list-style:none; padding:0; margin:0; display:grid; gap:.5rem; }
+.pd .includes li{ display:flex; gap:.6rem; font-size:.92rem; align-items:baseline; }
+.pd .includes .dot{ width:.45rem; height:.45rem; border-radius:50%; background:var(--accent-a); flex-shrink:0; margin-top:.4rem; }
+.pd-footer{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid var(--rule); flex-wrap:wrap; }
+.pd-price{ font-family:ui-monospace,monospace; font-weight:700; font-size:1.3rem; }
+.pd-guarantee{ font-size:.82rem; color:var(--ink-muted); }
+
+/* Slide-bar carousel */
+.slidebar{ margin:1.2rem 0; }
+.slidebar .frame{
+ position:relative; border-radius:10px; overflow:hidden; background:var(--surface-alt); border:1px solid var(--rule);
+ aspect-ratio:16/10; display:flex; align-items:center; justify-content:center;
+}
+.slidebar .frame img{ width:100%; height:100%; object-fit:contain; display:block; }
+.slidebar .nav{
+ position:absolute; top:50%; transform:translateY(-50%); background:rgba(20,20,20,.55); color:#fff;
+ border:none; width:2.1rem; height:2.1rem; border-radius:50%; font-size:1rem; display:flex; align-items:center; justify-content:center;
+}
+.slidebar .nav:hover{ background:rgba(20,20,20,.75); }
+.slidebar .nav.prev{ left:.6rem; }
+.slidebar .nav.next{ right:.6rem; }
+.slidebar .meta{ display:flex; align-items:center; justify-content:space-between; margin-top:.5rem; }
+.slidebar .counter{ font-size:.78rem; color:var(--ink-muted); font-family:ui-monospace,monospace; }
+.slidebar .dots{ display:flex; gap:.35rem; }
+.slidebar .dots button{ width:.4rem; height:.4rem; border-radius:50%; border:none; background:var(--rule); padding:0; }
+.slidebar .dots button.active{ background:var(--accent-a); }
+.slidebar .soon{
+ position:absolute; bottom:.6rem; left:50%; transform:translateX(-50%); background:rgba(20,20,20,.7); color:#fff;
+ font-size:.72rem; padding:.3rem .7rem; border-radius:20px; white-space:nowrap;
+}
 
 @media(max-width:480px){
  .card .row{ flex-direction:column; align-items:flex-start; gap:.6rem; }
- .buy{ width:100%; text-align:center; }
+ .capture{ flex-direction:column; align-items:flex-start; }
+ .capture-btn{ width:100%; text-align:center; }
 }
 </style>
 
 <header class="masthead">
  <span class="eyebrow">AI Field Guides</span>
  <h1>Plain-English AI Playbooks, Not Hype</h1>
- <p class="sub">Five short guides, each paired with a companion video, built by actually testing what works - not repackaging one creator's video. Pick the one for your problem, or get all five.</p>
+ <p class="sub">Five short guides, each paired with a companion video, built by actually testing what works - not repackaging one creator's video. Click any guide below to preview what's inside, slide by slide.</p>
 </header>
 
 <div class="wrap">
- <div class="grid">
-  <article class="card">
-   <span class="icon">📐</span>
+
+ <div class="capture">
+  <div class="txt">
+   <h3>Not ready to buy yet?</h3>
+   <p>Get free AI tips and first access when a new guide drops - just your email, no spam.</p>
+  </div>
+  <a class="capture-btn" href="https://housinghub.gumroad.com/subscribe" target="_blank" rel="noopener">Get free updates</a>
+ </div>
+
+ <div class="grid" id="top-grid">
+
+  <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-9paths').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-9paths').showModal();}">
+   <video class="teaser-vid" src="videos/9aipaths-teaser.mp4" autoplay muted loop playsinline></video>
    <h3>9 AI Business Paths</h3>
-   <p class="hook">Two tracks to making money with AI - build an audience over time, or start earning this week with cold outreach. Nine models mapped out plainly, with a built-in reality check on the hype.</p>
+   <p class="hook">Two tracks to making money with AI - build an audience over time, or start earning this week with cold outreach.</p>
+   <p class="pullquote">"Do you need $1,000 this week, or can you wait three years?"</p>
    <div class="row">
     <span class="price">$27</span>
-    <a class="buy" href="#buy-9paths">Get it</a>
+    <span class="preview-cta">Preview inside &rarr;</span>
    </div>
-  </article>
+  </div>
 
-  <article class="card">
+  <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-stack').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-stack').showModal();}">
    <span class="icon">🧰</span>
    <h3>The Small Business AI Stack</h3>
-   <p class="hook">Which AI tool to reach for and when - organized by the job it does, not the brand name, from your first chatbot up to running parts of your business hands-off.</p>
+   <p class="hook">Which AI tool to reach for and when - organized by the job it does, not the brand name.</p>
+   <p class="pullquote">"Most 'AI tools' lists are just a countdown of someone's favorites."</p>
    <div class="row">
     <span class="price">$12</span>
-    <a class="buy" href="#buy-stack">Get it</a>
+    <span class="preview-cta">Preview inside &rarr;</span>
    </div>
-  </article>
+  </div>
 
-  <article class="card">
+  <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-money').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-money').showModal();}">
    <span class="icon">💰</span>
    <h3>The AI-Assisted Money Audit</h3>
-   <p class="hook">A proven once-a-year money system - see every dollar you spent, set target ratios, track net worth - with the tedious spreadsheet grind handed off to AI.</p>
+   <p class="hook">A proven once-a-year money system - see every dollar you spent, set target ratios, track net worth.</p>
+   <p class="pullquote">"Almost nobody can tell you, to the dollar, what they actually spent last year."</p>
    <div class="row">
     <span class="price">$12</span>
-    <a class="buy" href="#buy-money">Get it</a>
+    <span class="preview-cta">Preview inside &rarr;</span>
    </div>
-  </article>
+  </div>
 
-  <article class="card">
+  <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-productivity').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-productivity').showModal();}">
    <span class="icon">🗂️</span>
    <h3>The 5-Layer AI Productivity System</h3>
-   <p class="hook">Capture, see the whole picture, decide with help, automate the repeats, test and improve - a real system for admin overload, not another list of tricks.</p>
+   <p class="hook">Capture, see the whole picture, decide with help, automate the repeats, test and improve.</p>
+   <p class="pullquote">"Most 'AI productivity' content is a grab-bag of tricks - hard to actually stick with."</p>
    <div class="row">
     <span class="price">$12</span>
-    <a class="buy" href="#buy-productivity">Get it</a>
+    <span class="preview-cta">Preview inside &rarr;</span>
    </div>
-  </article>
+  </div>
 
-  <article class="card">
+  <div class="card" tabindex="0" role="button" aria-haspopup="dialog" onclick="document.getElementById('m-ecom').showModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('m-ecom').showModal();}">
    <span class="icon">🛍️</span>
    <h3>The AI E-Commerce Build Order</h3>
-   <p class="hook">Six phases to launch an AI-assisted online store - product, brand, build, creative, ads, and protecting the business - including the real failures, not just the wins.</p>
+   <p class="hook">Six phases to launch an AI-assisted online store - including the real failures, not just the wins.</p>
+   <p class="pullquote">"One creator's first two product tests made $66 and $0 before the third one worked."</p>
    <div class="row">
     <span class="price">$12</span>
-    <a class="buy" href="#buy-ecom">Get it</a>
+    <span class="preview-cta">Preview inside &rarr;</span>
    </div>
-  </article>
+  </div>
+
  </div>
 
  <div class="bundle">
   <span class="eyebrow">Best value</span>
   <h2>Get All 5 Field Guides</h2>
-  <p class="sub">Every guide above, bundled - five PDFs, five companion videos, one price.</p>
+  <p class="sub">Every guide above - five PDFs, five companion videos, one price. Click any guide above to preview it, or grab the bundle.</p>
   <div class="price-row">
    <span class="strike">$60</span>
    <span class="now">$39</span>
   </div>
-  <a class="buy-lg" href="#buy-bundle">Get the Bundle</a>
+  <a class="buy-lg" href="#top-grid">See What's Included</a>
   <div class="whatyouget">
    <span class="item"><span class="dot"></span>5 PDF guides</span>
    <span class="item"><span class="dot"></span>5 companion videos</span>
@@ -169,25 +233,33 @@ footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; pa
   </div>
  </div>
 
- <div class="detail-divider">
-  <span class="eyebrow">The Full Details</span>
-  <hr>
- </div>
+</div>
 
- <article class="product-detail" id="buy-9paths">
-  <div class="pd-head"><span class="icon">📐</span><h2>9 AI Business Paths</h2></div>
-  <p class="problem">Every "make money with AI" video online blurs together after a while - and most of them skip the part that actually matters: whether the method fits <em>your</em> situation. Do you have a year to build an audience, or do you need cash in your pocket this week? This guide sorts nine real AI business models into two tracks based on exactly that question, so you're not guessing which advice applies to you.</p>
+<footer class="pagefoot">
+ <p>Each guide is written from scratch by synthesizing multiple sources and testing what's actually useful - not a repackaged copy of any single video.</p>
+</footer>
+
+<!-- ===================== MODALS ===================== -->
+
+<dialog class="pd" id="m-9paths">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><span class="icon">📐</span><h2>9 AI Business Paths</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-9paths').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Every "make money with AI" video online blurs together after a while - and most of them skip the part that actually matters: whether the method fits <em>your</em> situation. Do you have a year to build an audience, or do you need cash in your pocket this week? This guide sorts nine real AI business models into two tracks based on exactly that question.</p>
 
   <h4>What's Included</h4>
   <ul class="includes">
    <li><span class="dot"></span> The full PDF guide - Path A (build an audience) vs. Path B (cash this week), all nine models broken down step by step</li>
    <li><span class="dot"></span> A companion video walking through the same material</li>
    <li><span class="dot"></span> An Audio Overview - a spoken-discussion version for listening on the go</li>
-   <li><span class="dot"></span> A one-page cheat sheet summarizing the decision points and glossary</li>
+   <li><span class="dot"></span> A one-page cheat sheet (slide deck) summarizing the decision points and glossary</li>
    <li><span class="dot"></span> A visual infographic mapping all nine paths at a glance</li>
   </ul>
 
-  <img src="images/9aipaths-infographic-preview.jpg" alt="Preview of the 9 AI Business Paths infographic" style="width:100%;max-width:520px;display:block;margin:20px auto;border-radius:8px;">
+  <h4>Preview the Cheat Sheet</h4>
+  <div class="slidebar" data-prefix="images/slides-01-9-ai-business-paths/slide-" data-count="12" data-pad="2" data-ext="jpg"></div>
 
   <div class="pd-footer">
    <div>
@@ -196,9 +268,185 @@ footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; pa
    </div>
    <a class="buy-lg" href="https://housinghub.gumroad.com/l/9aibusinesspaths" target="_blank" rel="noopener">Buy Now</a>
   </div>
- </article>
-</div>
+ </div>
+</dialog>
 
-<footer class="pagefoot">
- <p>Each guide is written from scratch by synthesizing multiple sources and testing what's actually useful - not a repackaged copy of any single video.</p>
-</footer>
+<dialog class="pd" id="m-stack">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><span class="icon">🧰</span><h2>The Small Business AI Stack</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-stack').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Most "AI tools" lists are just a countdown of someone's favorites - a pile of names with no order and nothing to tell you what to do first. This one is organized by the actual job a small business owner needs done, from the most basic up to the most advanced, so you start at Tier 1 and only move down once the tier above is already working for you.</p>
+
+  <h4>What's Included</h4>
+  <ul class="includes">
+   <li><span class="dot"></span> The full PDF guide - all 7 tiers: Thinking &amp; Answers, Meetings, Talking to Leads, Content Without a Studio, Busywork on Autopilot, Build It Yourself, Keeping Score</li>
+   <li><span class="dot"></span> A companion video walking through the same material</li>
+   <li><span class="dot"></span> An Audio Overview - a spoken-discussion version for listening on the go</li>
+   <li><span class="dot"></span> A one-page cheat sheet (slide deck) summarizing all 7 tiers and where to start</li>
+   <li><span class="dot"></span> A visual infographic mapping the full stack at a glance</li>
+  </ul>
+
+  <h4>Preview the Infographic</h4>
+  <div class="slidebar" data-images="images/booklet2-infographic.jpg" data-soon="true"></div>
+
+  <div class="pd-footer">
+   <div>
+    <span class="pd-price">$12</span>
+    <div class="pd-guarantee">30-day money-back guarantee</div>
+   </div>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/mlbwtk" target="_blank" rel="noopener">Buy Now</a>
+  </div>
+ </div>
+</dialog>
+
+<dialog class="pd" id="m-money">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><span class="icon">💰</span><h2>The AI-Assisted Money Audit</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-money').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Most people can tell you roughly what they earn. Almost nobody can tell you, to the dollar, what they actually spent last year. This audit keeps the same proven four steps a real personal-finance routine already uses, but hands the tedious middle part off to AI - so a routine that used to eat a whole weekend fits into a single afternoon.</p>
+
+  <h4>What's Included</h4>
+  <ul class="includes">
+   <li><span class="dot"></span> The full PDF guide - all 4 steps: Gather, Categorize, Compare to Target, Net Worth</li>
+   <li><span class="dot"></span> A companion video walking through the same material</li>
+   <li><span class="dot"></span> An Audio Overview - a spoken-discussion version for listening on the go</li>
+   <li><span class="dot"></span> A one-page cheat sheet (slide deck) summarizing the 4 steps and target ratios</li>
+   <li><span class="dot"></span> A visual infographic mapping the full system at a glance</li>
+  </ul>
+
+  <h4>Preview the Infographic</h4>
+  <div class="slidebar" data-images="images/booklet3-infographic.jpg" data-soon="true"></div>
+
+  <div class="pd-footer">
+   <div>
+    <span class="pd-price">$12</span>
+    <div class="pd-guarantee">30-day money-back guarantee</div>
+   </div>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lmiovc" target="_blank" rel="noopener">Buy Now</a>
+  </div>
+ </div>
+</dialog>
+
+<dialog class="pd" id="m-productivity">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><span class="icon">🗂️</span><h2>The 5-Layer AI Productivity System</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-productivity').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Most "AI productivity" content is a grab-bag of individual tricks - useful in isolation, but hard to remember or stick with. Underneath the tips, busy people solving this problem consistently do the same five things, in roughly this order - this guide is that system, not another list of tricks.</p>
+
+  <h4>What's Included</h4>
+  <ul class="includes">
+   <li><span class="dot"></span> The full PDF guide - all 5 layers: Capture, See the Whole Picture, Decide With Help, Automate the Repeats, Test and Improve</li>
+   <li><span class="dot"></span> A companion video walking through the same material</li>
+   <li><span class="dot"></span> An Audio Overview - a spoken-discussion version for listening on the go</li>
+   <li><span class="dot"></span> A one-page cheat sheet (slide deck) summarizing all 5 layers and where to start</li>
+   <li><span class="dot"></span> A visual infographic mapping the full system at a glance</li>
+  </ul>
+
+  <h4>Preview the Infographic</h4>
+  <div class="slidebar" data-images="images/booklet4-infographic.jpg" data-soon="true"></div>
+
+  <div class="pd-footer">
+   <div>
+    <span class="pd-price">$12</span>
+    <div class="pd-guarantee">30-day money-back guarantee</div>
+   </div>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/glunk" target="_blank" rel="noopener">Buy Now</a>
+  </div>
+ </div>
+</dialog>
+
+<dialog class="pd" id="m-ecom">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><span class="icon">🛍️</span><h2>The AI E-Commerce Build Order</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-ecom').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Starting an online store used to mean weeks of manual work before the first sale was even possible. This is a 6-phase build order for launching an AI-assisted store - including the real failures, not just the wins: one creator's first two product tests made $66 and $0 before a third worked; another got their ad account banned mid-launch.</p>
+
+  <h4>What's Included</h4>
+  <ul class="includes">
+   <li><span class="dot"></span> The full PDF guide - all 6 phases: Pick a Product, Brand It Fast, Build the Store, Generate Creative, Launch and Read the Numbers, Protect the Business</li>
+   <li><span class="dot"></span> A companion video walking through the same material</li>
+   <li><span class="dot"></span> An Audio Overview - a spoken-discussion version for listening on the go</li>
+   <li><span class="dot"></span> A one-page cheat sheet (slide deck) summarizing all 6 phases</li>
+   <li><span class="dot"></span> A visual infographic mapping the full build order at a glance</li>
+  </ul>
+
+  <h4>Preview the Infographic</h4>
+  <div class="slidebar" data-images="images/booklet5-infographic.jpg" data-soon="true"></div>
+
+  <div class="pd-footer">
+   <div>
+    <span class="pd-price">$12</span>
+    <div class="pd-guarantee">30-day money-back guarantee</div>
+   </div>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lqvwq" target="_blank" rel="noopener">Buy Now</a>
+  </div>
+ </div>
+</dialog>
+
+<script>
+document.querySelectorAll('dialog.pd').forEach(function(dlg){
+ dlg.addEventListener('click', function(e){
+  var r = dlg.getBoundingClientRect();
+  var inside = r.top <= e.clientY && e.clientY <= r.top + r.height && r.left <= e.clientX && e.clientX <= r.left + r.width;
+  if(!inside) dlg.close();
+ });
+});
+
+document.querySelectorAll('.slidebar').forEach(function(sb){
+ var images = [];
+ if(sb.dataset.prefix){
+  var count = parseInt(sb.dataset.count, 10);
+  var pad = parseInt(sb.dataset.pad, 10) || 0;
+  for(var i=1; i<=count; i++){
+   var n = pad ? String(i).padStart(pad,'0') : String(i);
+   images.push(sb.dataset.prefix + n + '.' + sb.dataset.ext);
+  }
+ } else if(sb.dataset.images){
+  images = sb.dataset.images.split(',');
+ }
+ var idx = 0;
+ var frame = document.createElement('div'); frame.className = 'frame';
+ var img = document.createElement('img'); img.alt = 'Slide preview';
+ frame.appendChild(img);
+
+ if(images.length > 1){
+  var prev = document.createElement('button'); prev.className='nav prev'; prev.innerHTML='&larr;'; prev.type='button';
+  var next = document.createElement('button'); next.className='nav next'; next.innerHTML='&rarr;'; next.type='button';
+  frame.appendChild(prev); frame.appendChild(next);
+ }
+ if(sb.dataset.soon === 'true'){
+  var soon = document.createElement('div'); soon.className = 'soon'; soon.textContent = 'Full slide deck preview coming soon';
+  frame.appendChild(soon);
+ }
+ sb.appendChild(frame);
+
+ var meta = document.createElement('div'); meta.className='meta';
+ var counter = document.createElement('span'); counter.className='counter';
+ var dots = document.createElement('div'); dots.className='dots';
+ images.forEach(function(_, i){
+  var d = document.createElement('button'); d.type='button';
+  d.addEventListener('click', function(){ idx = i; render(); });
+  dots.appendChild(d);
+ });
+ if(images.length > 1){ meta.appendChild(counter); meta.appendChild(dots); sb.appendChild(meta); }
+
+ function render(){
+  img.src = images[idx];
+  counter.textContent = (idx+1) + ' / ' + images.length;
+  Array.from(dots.children).forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+ }
+ if(images.length > 1){
+  frame.querySelector('.prev').addEventListener('click', function(){ idx = (idx-1+images.length)%images.length; render(); });
+  frame.querySelector('.next').addEventListener('click', function(){ idx = (idx+1)%images.length; render(); });
+ }
+ render();
+});
+</script>
