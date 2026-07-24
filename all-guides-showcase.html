@@ -207,11 +207,71 @@ footer.pagefoot{ text-align:center; color:var(--ink-muted); font-size:.82rem; pa
   </div>
   <div class="save-badge">Save $26</div>
   <br>
-  <a class="buy-lg" href="https://housinghub.gumroad.com/l/igkrqe" target="_blank" rel="noopener">Grab All 5 Guides</a>
+  <a class="buy-lg" href="https://housinghub.gumroad.com/l/igkrqe" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-bundle')">Grab All 5 Guides</a>
   <p class="fine">30-day money-back guarantee, same as every guide.</p>
  </div>
 
 </div>
+
+<dialog class="pd" id="m-checkout-capture" style="max-width:420px;">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><h2>Almost there!</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-checkout-capture').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Enter your name and email so we can send your receipt, updates, and tips - then you'll continue straight to checkout.</p>
+  <form id="checkout-capture-form" class="capture-form" style="flex-direction:column;align-items:stretch;">
+   <input type="text" id="checkout-name" placeholder="Your name" autocomplete="name">
+   <input type="email" id="checkout-email" placeholder="you@email.com" autocomplete="email" required>
+   <button type="submit" class="buy-lg">Continue to Checkout</button>
+  </form>
+  <div class="capture-status" id="checkout-capture-status"></div>
+ </div>
+</dialog>
+
+<script>
+const LEADS_ENDPOINT = "https://gve-leads.globalhousingco.workers.dev";
+var pendingCheckoutUrl = null;
+var pendingCheckoutSource = null;
+
+document.querySelectorAll('dialog.pd').forEach(function(dlg){
+ dlg.addEventListener('click', function(e){
+  var r = dlg.getBoundingClientRect();
+  var inside = r.top <= e.clientY && e.clientY <= r.top + r.height && r.left <= e.clientX && e.clientX <= r.left + r.width;
+  if(!inside) dlg.close();
+ });
+});
+
+function interceptBuy(e, url, source){
+ e.preventDefault();
+ pendingCheckoutUrl = url;
+ pendingCheckoutSource = source;
+ document.getElementById('checkout-name').value = '';
+ document.getElementById('checkout-email').value = '';
+ document.getElementById('checkout-capture-status').textContent = '';
+ document.getElementById('m-checkout-capture').showModal();
+ return false;
+}
+
+document.getElementById('checkout-capture-form').addEventListener('submit', async function(e){
+ e.preventDefault();
+ var name = document.getElementById('checkout-name').value.trim();
+ var email = document.getElementById('checkout-email').value.trim();
+ var status = document.getElementById('checkout-capture-status');
+ if(!email){ status.textContent = 'Please enter your email.'; return; }
+
+ try{
+  await fetch(LEADS_ENDPOINT, {
+   method: 'POST',
+   headers: {'Content-Type': 'application/json'},
+   body: JSON.stringify({name: name, email: email, source: pendingCheckoutSource})
+  });
+ }catch(err){ /* don't block the purchase if capture fails */ }
+
+ document.getElementById('m-checkout-capture').close();
+ if(pendingCheckoutUrl) window.open(pendingCheckoutUrl, '_blank');
+});
+</script>
 
 <footer class="pagefoot">
  <p>Each guide is written from scratch by synthesizing multiple sources and testing what's actually useful - not a repackaged copy of any single video.</p>

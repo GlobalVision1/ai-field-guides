@@ -279,7 +279,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
     <span class="pd-price">$29</span>
     <div class="pd-guarantee">7-day money-back guarantee</div>
    </div>
-   <a class="buy-lg" href="https://housinghub.gumroad.com/l/9aibusinesspaths" target="_blank" rel="noopener">Buy Now</a>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/9aibusinesspaths" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-9paths')">Buy Now</a>
   </div>
  </div>
 </dialog>
@@ -309,7 +309,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
     <span class="pd-price">$29</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
-   <a class="buy-lg" href="https://housinghub.gumroad.com/l/mlbwtk" target="_blank" rel="noopener">Buy Now</a>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/mlbwtk" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-stack')">Buy Now</a>
   </div>
  </div>
 </dialog>
@@ -339,7 +339,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
     <span class="pd-price">$29</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
-   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lmiovc" target="_blank" rel="noopener">Buy Now</a>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lmiovc" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-money')">Buy Now</a>
   </div>
  </div>
 </dialog>
@@ -369,7 +369,7 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
     <span class="pd-price">$29</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
-   <a class="buy-lg" href="https://housinghub.gumroad.com/l/glunk" target="_blank" rel="noopener">Buy Now</a>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/glunk" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-productivity')">Buy Now</a>
   </div>
  </div>
 </dialog>
@@ -399,8 +399,24 @@ dialog.pd::backdrop{ background:rgba(10,16,20,.55); backdrop-filter:blur(2px); }
     <span class="pd-price">$29</span>
     <div class="pd-guarantee">30-day money-back guarantee</div>
    </div>
-   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lqvwq" target="_blank" rel="noopener">Buy Now</a>
+   <a class="buy-lg" href="https://housinghub.gumroad.com/l/lqvwq" target="_blank" rel="noopener" onclick="return interceptBuy(event, this.href, 'buy-ecom')">Buy Now</a>
   </div>
+ </div>
+</dialog>
+
+<dialog class="pd" id="m-checkout-capture" style="max-width:420px;">
+ <div class="pd-scroll">
+  <div class="pd-head">
+   <div class="titlewrap"><h2>Almost there!</h2></div>
+   <button class="pd-close" onclick="document.getElementById('m-checkout-capture').close()" aria-label="Close">&times;</button>
+  </div>
+  <p class="problem">Enter your name and email so we can send your receipt, updates, and tips - then you'll continue straight to checkout.</p>
+  <form id="checkout-capture-form" class="capture-form" style="flex-direction:column;align-items:stretch;">
+   <input type="text" id="checkout-name" placeholder="Your name" autocomplete="name">
+   <input type="email" id="checkout-email" placeholder="you@email.com" autocomplete="email" required>
+   <button type="submit" class="buy-lg">Continue to Checkout</button>
+  </form>
+  <div class="capture-status" id="checkout-capture-status"></div>
  </div>
 </dialog>
 
@@ -524,5 +540,41 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
  }
  window.open('https://housinghub.gumroad.com/subscribe', '_blank');
  status.textContent = 'Thanks! Redirecting you to join our list.';
+});
+
+// ---- Pre-checkout capture: save name/email to our own database before sending to Gumroad ----
+var pendingCheckoutUrl = null;
+var pendingCheckoutSource = null;
+
+function interceptBuy(e, url, source){
+ e.preventDefault();
+ pendingCheckoutUrl = url;
+ pendingCheckoutSource = source;
+ document.getElementById('checkout-name').value = '';
+ document.getElementById('checkout-email').value = '';
+ document.getElementById('checkout-capture-status').textContent = '';
+ document.getElementById('m-checkout-capture').showModal();
+ return false;
+}
+
+document.getElementById('checkout-capture-form').addEventListener('submit', async function(e){
+ e.preventDefault();
+ var name = document.getElementById('checkout-name').value.trim();
+ var email = document.getElementById('checkout-email').value.trim();
+ var status = document.getElementById('checkout-capture-status');
+ if(!email){ status.textContent = 'Please enter your email.'; return; }
+
+ var configured = LEADS_ENDPOINT.indexOf('REPLACE_WITH') !== 0;
+ if(configured){
+  try{
+   await fetch(LEADS_ENDPOINT, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name: name, email: email, source: pendingCheckoutSource})
+   });
+  }catch(err){ /* don't block the purchase if capture fails */ }
+ }
+ document.getElementById('m-checkout-capture').close();
+ if(pendingCheckoutUrl) window.open(pendingCheckoutUrl, '_blank');
 });
 </script>
